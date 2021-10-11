@@ -9,6 +9,9 @@ public class Main {
     private static Scanner s = new Scanner(System.in);
 
     public static void main(String[] args){
+        ComplexCalculator cc = new ComplexCalculator(2,3,3,3);
+        VektorCalculator vc = new VektorCalculator(3,3,3,3);
+        RationalCalculator rc = new RationalCalculator(3,3,3,3);
         while(OPTION != 4){
             switch (menue()){
 
@@ -37,7 +40,11 @@ public class Main {
     }
 
     private static void enterNumbers(){
-        System.out.println("Enter number x a>");
-        s.nextLine();
+        try {
+            System.out.println("Enter number x a>");
+            s.nextLine();
+        }catch(NumberFormatException e){
+
+        }
     }
 }
