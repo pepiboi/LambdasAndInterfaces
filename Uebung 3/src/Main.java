@@ -14,7 +14,17 @@ public class Main {
         RationalCalculator rc = new RationalCalculator(3,3,3,3);
         while(OPTION != 4){
             switch (menue()){
+                case 1:
+                    
+                    break;
+                case 2:
 
+                    break;
+                case 3:
+
+                    break;
+                default:
+                    System.exit(0);
             }
         }
     }
@@ -42,9 +52,16 @@ public class Main {
     private static void enterNumbers(){
         try {
             System.out.println("Enter number x a>");
-            s.nextLine();
+            xA = Integer.parseInt(s.nextLine());
+            System.out.println("Enter number x b>");
+            xB = Integer.parseInt(s.nextLine());
+            System.out.println("Enter number y a>");
+            yA = Integer.parseInt(s.nextLine());
+            System.out.println("Enter number y b>");
+            yA = Integer.parseInt(s.nextLine());
         }catch(NumberFormatException e){
-
+            System.out.println("Geben Sie gültige Zahlen ein.");
+            enterNumbers();
         }
     }
 }
