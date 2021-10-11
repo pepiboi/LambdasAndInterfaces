@@ -1,8 +1,9 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
 
         Scanner s = new Scanner(System.in);
 
@@ -12,8 +13,8 @@ public class Main {
             System.out.println("Geben Sie einen Gültigen Pfad ein oder stellen Sie sicher, dass die Datei ist eine .txt Datei ist.");
             nt.setFile(s.nextLine());
         }
-        nt.setOddEvenTester( (n) -> (n % 2) == 0);
-        nt.setPalindromeTester((n) -> {
+        nt.setOddEvenTester( (int n) -> (n % 2) == 0);
+        nt.setPalindromeTester((int n) -> {
             String str = Integer.toString(n);
             int i = 0, j = str.length() - 1;
             while (i < j) {
@@ -25,7 +26,7 @@ public class Main {
             }
             return true;
         });
-        nt.setPrimeTester((n) -> {
+        nt.setPrimeTester((int n) -> {
             if (n <= 1) return false;
             for (int i = 2; i < n; i++) {
                 if (n % i == 0) {
@@ -34,7 +35,10 @@ public class Main {
             }
             return true;
         });
-
-        nt.testFile();
+        try{
+        nt.testFile(); }
+        catch(Exception e){
+            System.out.println("Dumm gelaufen.");
+        }
     }
 }
