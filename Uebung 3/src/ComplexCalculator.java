@@ -22,4 +22,5 @@ public class ComplexCalculator extends AbstractCalculator{
     public Number divide(Number a, Number b) {
         return divide.calc(a,b);
     }
+    
 }
