@@ -1,6 +1,7 @@
 public class ComplexCalculator extends AbstractCalculator{
-    public ComplexCalculator(CalculationOperation add, CalculationOperation subtract, CalculationOperation mulitply, CalculationOperation divide) {
-        super(add, subtract, mulitply, divide);
+
+    public ComplexCalculator(CalculationOperation add, CalculationOperation subtract, CalculationOperation multiply, CalculationOperation divide) {
+        super(add, subtract, multiply, divide);
     }
 
     @Override
@@ -22,5 +23,4 @@ public class ComplexCalculator extends AbstractCalculator{
     public Number divide(Number a, Number b) {
         return divide.calc(a,b);
     }
-
 }
