@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -10,47 +11,29 @@ public class Main {
 
     public static void main(String[] args){
         ComplexCalculator cc = new ComplexCalculator(
-                (x, y) -> { x.setA(xA);
-                            x.setB(xB);
-                            y.setA(yA);
-                            y.setB(yB);
-                            Number b = new Number();
-                            b.setA((x.getA() + x.getB()));
-                            b.setB((y.getA() + y.getB()));
-                            return b;},
-                (x, y) -> { x.setA(xA);
-                            x.setB(xB);
-                            y.setA(yA);
-                            y.setB(yB);
-                            Number b = new Number();
-                            b.setA((x.getA() - x.getB()));
-                            b.setB((y.getA() - y.getB()));
-                            return b;},
-                (x, y) -> { x.setA(xA);
-                            x.setB(xB);
-                            y.setA(yA);
-                            y.setB(yB);
-                            Number b = new Number();
-                            b.setA((x.getA() * x.getB() - y.getA() * y.getB()));
-                            b.setB((x.getA() * y.getB() - y.getA() * y.getB()));
-                            return b;},
-                (x, y) -> { x.setA(xA);
-                            x.setB(xB);
-                            y.setA(yA);
-                            y.setB(yB);
-                            Number b = new Number();
-                            b.setA((x.getA() * x.getB() + y.getA() * y.getB())/(x.getB() * x.getB() + y.getB() * y.getB()));
-                            b.setB((y.getA() * x.getB() - x.getA() * y.getB())/(x.getB() * x.getB() + y.getB() * y.getB()));
-                            return b;}
+                (x, y) -> { return assignNumbers(x, y , '+');},
+                (x, y) -> { return assignNumbers(x, y , '-');},
+                (x, y) -> { return assignNumbers(x, y , '*');},
+                (x, y) -> { return assignNumbers(x, y , '/');}
         );
-        VektorCalculator vc = new VektorCalculator(3,3,3,3);
-        RationalCalculator rc = new RationalCalculator(3,3,3,3);
+        VektorCalculator vc = new VektorCalculator(
+                (x, y) -> { return assignNumbers(x, y , '+');},
+                (x, y) -> { return assignNumbers(x, y , '-');},
+                (x, y) -> { return assignNumbers(x, y , '*');},
+                (x, y) -> { return assignNumbers(x, y , '/');}
+        );
+        RationalCalculator rc = new RationalCalculator(
+                (x, y) -> { return assignNumbers(x, y , '+');},
+                (x, y) -> { return assignNumbers(x, y , '-');},
+                (x, y) -> { return assignNumbers(x, y , '*');},
+                (x, y) -> { return assignNumbers(x, y , '/');}
+        );
         int op = 0;
         while(true){
             menue();
             switch (OPTION){
                 case 1:
-
+                    
                     break;
                 case 2:
 
@@ -91,7 +74,7 @@ public class Main {
             System.out.println("Enter number y a>");
             yA = Double.parseDouble(s.nextLine());
             System.out.println("Enter number y b>");
-            yA = Double.parseDouble(s.nextLine());
+            yB = Double.parseDouble(s.nextLine());
         }catch(NumberFormatException e){
             System.out.println("Not a valid Number.");
             enterNumbersVektor();
@@ -107,7 +90,7 @@ public class Main {
             System.out.println("Enter imaginary number 1>");
             yA = Double.parseDouble(s.nextLine());
             System.out.println("Enter imaginary number 2>");
-            yA = Double.parseDouble(s.nextLine());
+            yB = Double.parseDouble(s.nextLine());
         }catch(NumberFormatException e){
             System.out.println("Not a valid Number.");
             enterNumbersVektor();
@@ -115,14 +98,20 @@ public class Main {
     }
     private static void enterNumberRational(){
         try {
-            System.out.println("Enter number x a>");
+            System.out.println("Enter number p 1>");
             xA = Double.parseDouble(s.nextLine());
-            System.out.println("Enter number x b>");
+            System.out.println("Enter number q 2>");
             xB = Double.parseDouble(s.nextLine());
-            System.out.println("Enter number y a>");
+            if(xB == 0){
+                System.out.println("q cannot be 0.");
+            }
+            System.out.println("Enter number p 1>");
             yA = Double.parseDouble(s.nextLine());
-            System.out.println("Enter number y b>");
-            yA = Double.parseDouble(s.nextLine());
+            System.out.println("Enter number q 2>");
+            yB = Double.parseDouble(s.nextLine());
+            if(yA == 0){
+                System.out.println("q cannot be 0.");
+            }
         }catch(NumberFormatException e){
             System.out.println("Not a valid Number.");
             enterNumbersVektor();
@@ -150,5 +139,30 @@ public class Main {
         return op;
     }
 
+    private static Number assignNumbers(Number x, Number y, char operator){
+        x.setA(xA);
+        x.setB(xB);
+        y.setA(yA);
+        y.setB(yB);
+        Number b = new Number();
+        switch(operator){
+            case '+':
+                b.setA((x.getA() + x.getB()));
+                b.setB((y.getA() + y.getB()));
+                break;
+            case '-':
+                b.setA((x.getA() - x.getB()));
+                b.setB((y.getA() - y.getB()));
+                break;
+            case '/':
+                b.setA((x.getA() * x.getB() + y.getA() * y.getB())/(x.getB() * x.getB() + y.getB() * y.getB()));
+                b.setB((y.getA() * x.getB() - x.getA() * y.getB())/(x.getB() * x.getB() + y.getB() * y.getB()));
+                break;
+            default:
+                b.setA((x.getA() * x.getB() - y.getA() * y.getB()));
+                b.setB((x.getA() * y.getB() - y.getA() * y.getB()));
+        }
+        return b;
+    }
 
 }
