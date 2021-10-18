@@ -1,125 +1,119 @@
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     private static int OPTION = -1;
-    private static double xA = 0; // real Number 1
-    private static double xB = 0; // real Number 2
-    private static double yA = 0; // imaginary Number 1
-    private static double yB = 0; // imaginary Number 2
+    private static int OPERATION = -1;
+    private static Number b = new Number();
+    private static Number x = new Number();
+    private static Number y = new Number();
     private static Scanner s = new Scanner(System.in);
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         ComplexCalculator cc = new ComplexCalculator(
-                (x, y) -> { return assignNumbers(x, y , '+');},
-                (x, y) -> { return assignNumbers(x, y , '-');},
-                (x, y) -> { return assignNumbers(x, y , '*');},
-                (x, y) -> { return assignNumbers(x, y , '/');}
+                (x, y) -> {
+                    return assignNumbers(x, y, 1);
+                },
+                (x, y) -> {
+                    return assignNumbers(x, y, 2);
+                },
+                (x, y) -> {
+                    return assignNumbers(x, y, 3);
+                },
+                (x, y) -> {
+                    return assignNumbers(x, y, 4);
+                }
         );
         VektorCalculator vc = new VektorCalculator(
-                (x, y) -> { return assignNumbers(x, y , '+');},
-                (x, y) -> { return assignNumbers(x, y , '-');},
-                (x, y) -> { return assignNumbers(x, y , '*');},
-                (x, y) -> { return assignNumbers(x, y , '/');}
+                (x, y) -> {
+                    return assignNumbers(x, y, 1);
+                },
+                (x, y) -> {
+                    return assignNumbers(x, y, 2);
+                },
+                (x, y) -> {
+                    return assignNumbers(x, y, 3);
+                },
+                (x, y) -> {
+                    return assignNumbers(x, y, 4);
+                }
         );
         RationalCalculator rc = new RationalCalculator(
-                (x, y) -> { return assignNumbers(x, y , '+');},
-                (x, y) -> { return assignNumbers(x, y , '-');},
-                (x, y) -> { return assignNumbers(x, y , '*');},
-                (x, y) -> { return assignNumbers(x, y , '/');}
+                (x, y) -> {
+                    return assignNumbers(x, y, 1);
+                },
+                (x, y) -> {
+                    return assignNumbers(x, y, 2);
+                },
+                (x, y) -> {
+                    return assignNumbers(x, y, 3);
+                },
+                (x, y) -> {
+                    return assignNumbers(x, y, 4);
+                }
         );
-        int op = 0;
-        while(true){
+        while (true) {
             menue();
-            switch (OPTION){
+            switch (OPTION) {
                 case 1:
-                    
+                    enterNumbers();
+                    calcOperation();
+                    b = check(rc);
                     break;
                 case 2:
-
+                    enterNumbers();
+                    calcOperation();
+                    b = check(vc);
                     break;
                 case 3:
-
+                    enterNumbers();
+                    calcOperation();
+                    b = check(cc);
                     break;
                 default:
                     System.exit(0);
             }
+            System.out.println("----------------");
+            System.out.println("Solution:");
+            System.out.printf("a = %s\nb = %s\n",b.getA(),b.getB());
+            System.out.println("----------------");
         }
     }
 
-    private static void menue(){
-            System.out.println("Choose calculator:");
-            System.out.println("1 - Relational calculator");
-            System.out.println("2 - Vector calculator");
-            System.out.println("3 - Complex calculator");
-            System.out.println("4 - exit programm");
-            try {
-                OPTION = Integer.parseInt(s.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("Not a valid Number.");
-                menue();
-            }
-            if (OPTION > 4 || OPTION < 1) {
-                System.out.println("Not a valid Number.");
-                menue();
-            }
+    private static void menue() {
+        System.out.println("Choose calculator:");
+        System.out.println("1 - Relational calculator");
+        System.out.println("2 - Vector calculator");
+        System.out.println("3 - Complex calculator");
+        System.out.println("4 - exit programm");
+        try {
+            OPTION = Integer.parseInt(s.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Not a valid Number.");
+            menue();
+        }
+        if (OPTION > 4 || OPTION < 1) {
+            System.out.println("Not a valid Number.");
+            menue();
+        }
     }
 
-    private static void enterNumbersVektor(){
+    private static void enterNumbers() {
         try {
             System.out.println("Enter number x a>");
-            xA = Double.parseDouble(s.nextLine());
+            x.setA(Double.parseDouble(s.nextLine()));
             System.out.println("Enter number x b>");
-            xB = Double.parseDouble(s.nextLine());
+            x.setB(Double.parseDouble(s.nextLine()));
             System.out.println("Enter number y a>");
-            yA = Double.parseDouble(s.nextLine());
+            y.setA(Double.parseDouble(s.nextLine()));
             System.out.println("Enter number y b>");
-            yB = Double.parseDouble(s.nextLine());
-        }catch(NumberFormatException e){
+            y.setB(Double.parseDouble(s.nextLine()));
+        } catch (NumberFormatException e) {
             System.out.println("Not a valid Number.");
-            enterNumbersVektor();
+            enterNumbers();
         }
     }
 
-    private static void enterNumbersComplex(){
-        try {
-            System.out.println("Enter real number 1>");
-            xA = Double.parseDouble(s.nextLine());
-            System.out.println("Enter real number 2>");
-            xB = Double.parseDouble(s.nextLine());
-            System.out.println("Enter imaginary number 1>");
-            yA = Double.parseDouble(s.nextLine());
-            System.out.println("Enter imaginary number 2>");
-            yB = Double.parseDouble(s.nextLine());
-        }catch(NumberFormatException e){
-            System.out.println("Not a valid Number.");
-            enterNumbersVektor();
-        }
-    }
-    private static void enterNumberRational(){
-        try {
-            System.out.println("Enter number p 1>");
-            xA = Double.parseDouble(s.nextLine());
-            System.out.println("Enter number q 2>");
-            xB = Double.parseDouble(s.nextLine());
-            if(xB == 0){
-                System.out.println("q cannot be 0.");
-            }
-            System.out.println("Enter number p 1>");
-            yA = Double.parseDouble(s.nextLine());
-            System.out.println("Enter number q 2>");
-            yB = Double.parseDouble(s.nextLine());
-            if(yA == 0){
-                System.out.println("q cannot be 0.");
-            }
-        }catch(NumberFormatException e){
-            System.out.println("Not a valid Number.");
-            enterNumbersVektor();
-        }
-    }
-
-    private static int calcOperation(){
-        int op = 0;
+    private static void calcOperation() {
         System.out.println("Choose Operation:");
         System.out.println("1 - add");
         System.out.println("2 - subtract");
@@ -127,42 +121,49 @@ public class Main {
         System.out.println("4 - divide");
         System.out.println("5 - Enter Numbers again");
         try {
-            op = Integer.parseInt(s.nextLine());
+            OPERATION = Integer.parseInt(s.nextLine());
         } catch (NumberFormatException e) {
             System.out.println("Not a valid Number.");
             calcOperation();
         }
-        if (op > 5 || op < 1) {
+        if (OPERATION > 5 || OPERATION < 1) {
             System.out.println("Not a valid Number.");
             calcOperation();
         }
-        return op;
     }
 
-    private static Number assignNumbers(Number x, Number y, char operator){
-        x.setA(xA);
-        x.setB(xB);
-        y.setA(yA);
-        y.setB(yB);
-        Number b = new Number();
-        switch(operator){
-            case '+':
+    private static Number assignNumbers(Number x, Number y, int operator) {
+        switch (operator) {
+            case 1:
                 b.setA((x.getA() + x.getB()));
                 b.setB((y.getA() + y.getB()));
                 break;
-            case '-':
+            case 2:
                 b.setA((x.getA() - x.getB()));
                 b.setB((y.getA() - y.getB()));
                 break;
-            case '/':
-                b.setA((x.getA() * x.getB() + y.getA() * y.getB())/(x.getB() * x.getB() + y.getB() * y.getB()));
-                b.setB((y.getA() * x.getB() - x.getA() * y.getB())/(x.getB() * x.getB() + y.getB() * y.getB()));
-                break;
-            default:
+            case 3:
                 b.setA((x.getA() * x.getB() - y.getA() * y.getB()));
                 b.setB((x.getA() * y.getB() - y.getA() * y.getB()));
+                break;
+            default:
+                b.setA((x.getA() * x.getB() + y.getA() * y.getB()) / (x.getB() * x.getB() + y.getB() * y.getB()));
+                b.setB((y.getA() * x.getB() - x.getA() * y.getB()) / (x.getB() * x.getB() + y.getB() * y.getB()));
         }
         return b;
+    }
+
+    private static Number check(AbstractCalculator a) {
+        switch (OPERATION) {
+            case 1:
+                return a.add(x, y);
+            case 2:
+                return a.subtract(x, y);
+            case 3:
+                return a.multiply(x, y);
+            default:
+                return a.divide(x, y);
+        }
     }
 
 }

@@ -2,7 +2,7 @@ public abstract class AbstractCalculator {
 
     protected CalculationOperation add;
     protected CalculationOperation subtract;
-    protected CalculationOperation mulitply;
+    protected CalculationOperation multiply;
     protected CalculationOperation divide;
 
     public AbstractCalculator(CalculationOperation add,
@@ -11,7 +11,7 @@ public abstract class AbstractCalculator {
                               CalculationOperation divide) {
         this.add = add;
         this.subtract = subtract;
-        this.mulitply = mulitply;
+        this.multiply = mulitply;
         this.divide = divide;
     }
 

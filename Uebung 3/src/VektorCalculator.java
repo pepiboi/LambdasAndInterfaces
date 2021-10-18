@@ -15,7 +15,7 @@ public class VektorCalculator extends AbstractCalculator{
 
     @Override
     public Number multiply(Number a, Number b) {
-        return mulitply.calc(a,b);
+        return multiply.calc(a,b);
     }
 
     @Override
